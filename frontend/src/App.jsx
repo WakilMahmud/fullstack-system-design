@@ -1,10 +1,9 @@
 import React from 'react';
+import StudentCreate from './features/student/StudentCreate';
 
 const App = () => {
   return (
-    <h1 class="text-3xl font-bold text-red-500 underline">
-      Hello world!
-    </h1>
+    <StudentCreate />
   )
 }
 
