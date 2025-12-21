@@ -1,0 +1,68 @@
+services:
+  mongo-service:
+    container_name: mongo-container
+    image: mongo:latest
+    env_file:
+      - ./backend/.env
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "mongodb://localhost:27017/admin", "-u", "wakil_admin", "-p", "wakil_pass", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+
+  backend-service:
+    container_name: backend-container
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - ./backend/.env
+    restart: always
+    volumes:
+      - ./backend:/app #bind mount
+      - /app/node_modules #anonymous volume
+    depends_on:
+      - mongo-service
+  
+
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      mongo-service:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://wakil_admin:wakil_pass@mongo-service:27017/test-db?authSource=admin
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
+      ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
+
+
+  frontend-service:
+    container_name: frontend-container
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: always
+    depends_on:
+      - backend-service
+    env_file:
+      - ./frontend/.env
+
+
+
+volumes:
+  mongodb_data:
