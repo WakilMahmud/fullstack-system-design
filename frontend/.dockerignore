@@ -1,0 +1,42 @@
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Build output (will be generated inside Docker)
+dist
+build
+
+# Logs
+*.log
+
+# IDE / Editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+__tests__
+test
+tests
+
+# Docker
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+
+# Misc
+.cache
+.tmp
+.temp
