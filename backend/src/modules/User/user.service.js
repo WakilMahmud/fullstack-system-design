@@ -1,4 +1,4 @@
-import { User } from './user.model.js';
+import UserDAO from './user.dao.js';
 import { generateStudentId } from './user.utils.js';
 
 const createStudentIntoDB = async (email) => {
@@ -8,7 +8,8 @@ const createStudentIntoDB = async (email) => {
     };
 
     try {
-        const newStudent = await User.create(userData);
+        // const newStudent = await User.create(userData);
+        const newStudent = await UserDAO.createUser(userData);
 
         return newStudent;
     } catch (err) {
@@ -16,6 +17,18 @@ const createStudentIntoDB = async (email) => {
     }
 };
 
+
+const getAllStudentsFromDB = async () => {
+    try {
+        const students = await UserDAO.findAll();
+
+        return students;
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+
 export const UserServices = {
-    createStudentIntoDB
+    createStudentIntoDB,
+    getAllStudentsFromDB
 };
