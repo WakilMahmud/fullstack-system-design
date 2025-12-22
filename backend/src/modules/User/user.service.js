@@ -1,4 +1,5 @@
-import UserDAO from './user.dao.js';
+
+import { DAOs } from '../../DAOs/index.js';
 import { generateStudentId } from './user.utils.js';
 
 const createStudentIntoDB = async (email) => {
@@ -9,7 +10,7 @@ const createStudentIntoDB = async (email) => {
 
     try {
         // const newStudent = await User.create(userData);
-        const newStudent = await UserDAO.createUser(userData);
+        const newStudent = await DAOs.UserDAO.createUser(userData);
 
         return newStudent;
     } catch (err) {

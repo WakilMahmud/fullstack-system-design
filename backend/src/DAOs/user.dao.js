@@ -1,4 +1,5 @@
-import { User } from './user.model.js';
+import { User } from "../modules/User/user.model.js";
+
 
 class UserDAO {
     static async findAll() {
