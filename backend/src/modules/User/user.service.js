@@ -9,7 +9,6 @@ const createStudentIntoDB = async (email) => {
     };
 
     try {
-        // const newStudent = await User.create(userData);
         const newStudent = await DAOs.UserDAO.createUser(userData);
 
         return newStudent;
@@ -21,7 +20,7 @@ const createStudentIntoDB = async (email) => {
 
 const getAllStudentsFromDB = async () => {
     try {
-        const students = await UserDAO.findAll();
+        const students = await DAOs.UserDAO.findAll();
 
         return students;
     } catch (err) {

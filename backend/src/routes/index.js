@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { UserRoutes } from '../modules/User/user.route.js';
+import { UserRoutes, UserRoutesMeta } from '../modules/User/user.route.js';
 
 const router = Router();
 
-const moduleRoutes = [
+export const moduleRoutes = [
     {
         path: '/users',
-        route: UserRoutes
-    }
+        route: UserRoutes,
+        absoluteSourcePath: UserRoutesMeta.absoluteSourcePath,
+    },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
